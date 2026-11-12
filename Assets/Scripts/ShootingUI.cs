@@ -16,8 +16,20 @@ public class ShootingUI : MonoBehaviour
         mainCam = FindAnyObjectByType<Camera>();
     }
 
-    void OnShootButtonClicked()
+    void ShootBallOnButton()
     {
+        Start();
+        Vector3 spawnPosition = mainCam.transform.position + mainCam.transform.forward * 0.1f;
+        Quaternion spawnRotation = mainCam.transform.rotation;
 
+        GameObject spawnBall = Instantiate(BallPrefab, spawnPosition, spawnRotation);
+        Rigidbody rb = spawnBall.GetComponent<Rigidbody>();
+
+        if(rb != null)
+        {
+            rb.AddForce(mainCam.transform.forward * ballFowardForce);
+        }
+
+        Destroy(spawnBall, 5f);
     }
 }
